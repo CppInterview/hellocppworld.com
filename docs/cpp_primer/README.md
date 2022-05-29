@@ -1,0 +1,25 @@
+# 《C++ Primer 中文版第五版》系列视频笔记
+### [00 准备工作](./00_preparatory_work/)
+### [01 开始](./01_getting_started/)
+## 第1部分 C++基础
+### [02 变量和基本类型](./02_variables_and_basic_types/)
+### [03 字符串、向量和数组](./03_string_vectors_and_arrays/)
+### [04 表达式](./04_expressions/)
+### [05 语句](./05_statements/)
+### [06 函数](./06_functions/)
+### [07 类](./07_classes/)
+## 第2部分 C++标准库
+### [08 IO库](./08_the_io_library/)
+### [09 顺序容器](./09_sequential_containers/)
+### [10 泛型算法](./10_generic_algorithms/)
+### [11 关联容器](./11_associative_containers/)
+### [12 动态内存](./12_dynamic_memory/)
+## 第3部分 类设计者的工具
+### [13 拷贝控制](./13_copy_control/)
+### [14 操作重载与类型转换](./14_overloaded_operations_and_conversions/)
+### [15 面向对象的程序设计](./15_object-oriented_programming/)
+### [16 泛型与泛型编程](./16_templates_and_generic_programming/)
+## 第4部分 高级主题
+### [17 标准库特殊设施](./17_specialized_library_facilities/)
+### [18 用于大型程序的工具](./18_tools_for_large_programs/)
+### [19 特殊工具与技术](./19_specialized_tools_and_techniques/)

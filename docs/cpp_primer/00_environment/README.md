@@ -23,6 +23,8 @@
 
 ## 如何配置C++开发环境？
 
+### Windows
+
 首先我们来配置`Windows`下的开发环境，我是用的是`Windows 11`操作系统，`IDE`选用`Visual Studio 2022 Community`，个人开发者选用`Community`版本是免费的，而且对于我们来说`Community`版本的功能已经完全够用。
 
 https://visualstudio.microsoft.com/zh-hans/vs/
@@ -40,3 +42,29 @@ https://visualstudio.microsoft.com/zh-hans/vs/
 选择”使用C++的桌面开发“，点击安装，Visual Studio Installer开始下载相关组件并且安装到本地。安装完成后首次启动需要你登录，也可以创建一个免费的Microsoft账号登录。
 
 ![登录](https://s2.loli.net/2022/05/29/GleoWTSDhimYIBH.png)
+
+登录完成之后`Windows`上的`C++`开发环境就配置完成了。
+
+### Linux
+
+`Linux`发行版本较多，本文将以`Ubuntu 22.04 LTS`演示，其他发行版本大同小异。
+
+首先登录`Linux`，在终端中执行：
+
+```sh
+sudo apt install gcc g++ -y
+```
+
+执行完命令之后，可以在终端中执行：
+
+```sh
+g++ -v
+```
+
+![验证C++开发环境](https://s2.loli.net/2022/05/29/yHI4YXuQVicegpU.png)
+
+如果出现以上界面，就证明`C++`开发环境安装完成了。
+
+当然你可以装个`vscode`当Linux桌面的`C++`开发`IDE`，也可以直接使用Linux系统自带的vim作为编辑工具。`vscode`安装不再赘述，如果你选择了`Linux`，相信你有解决问题的能力。
+
+雄关漫漫真如铁，而今迈步从头越。让我们开始`C++`学习的伟大旅程吧！

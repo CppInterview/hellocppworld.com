@@ -2,7 +2,7 @@
 
 在C++11中，lambda表达式有两种变量捕获方式，分别为值捕获和引用捕获。这两种捕获的形式如下：
 
-``` c++
+```cpp
 #include <iostream>
 
 int main(int argc, char* argv[])

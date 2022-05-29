@@ -1,5 +1,5 @@
 # 《C++ Primer 中文版第五版》系列视频笔记
-### [00 准备工作](./00_preparatory_work/)
+### [00 环境](./00_environment/)
 ### [01 开始](./01_getting_started/)
 ## 第1部分 C++基础
 ### [02 变量和基本类型](./02_variables_and_basic_types/)

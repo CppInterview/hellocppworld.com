@@ -1,10 +1,6 @@
-import { defineUserConfig } from 'vuepress'
 const { defaultTheme } = require('@vuepress/theme-default')
-const vssuePlugin = require('@vssue/vuepress-plugin-vssue')
-const { backToTopPlugin } = require('@vuepress/plugin-back-to-top')
-
-
-export default defineUserConfig({
+const vssue = require('@vssue/vuepress-plugin-vssue')
+module.exports = {
     lang: 'zh-CN',
     title: 'C++从入门到放弃',
     description: '《C++ 从入门到放弃》系列知识分享。',
@@ -12,7 +8,7 @@ export default defineUserConfig({
         logo: '/images/logo.png',
         navbar: [
             {
-                text: 'C++ Primer 系列',
+                text: 'C++ Primer系列',
                 link: '/cpp_primer/',
             },
             {
@@ -27,14 +23,15 @@ export default defineUserConfig({
                 text: 'C++ 面试宝典',
                 link: '/cpp_interview/',
             },
-            {
-                text: '关于 C++的三个问题',
-                link: '/about_cpp/',
-            },
-            {
-                text: 'GitHub',
-                link: 'https://github.com/HelloCppWorld/',
-            },
         ],
     }),
-})
+    plugins:[
+        vssue({
+            platform: 'github-v4',
+            owner: 'HelloCppWorld',
+            repo: 'comments',
+            clientId: 'b11bd27cb39ec96b732d',
+            clientSecret: '90169121f04d20054312c63617c3761792cd8d37',
+        }), 
+    ],
+}

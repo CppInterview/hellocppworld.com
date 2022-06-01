@@ -439,6 +439,7 @@ public:
 #include <iostream>
 class Foo
 {
+public:
     int x;
     void print(){std::cout << x << std::endl;}
 };

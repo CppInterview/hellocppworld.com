@@ -177,6 +177,107 @@ int main(int argc, char* argv[])
 
 ### 2.2.1 变量定义
 
+首先是**类型说明符**（`type specifier`），后面紧跟一个或多个变量名组成的列表，其中变量名以逗号分隔，最后以分号结束。定义变量时可以为其赋初值。
+
+```CPP
+int i, j = 0, sum = 42;
+std::string str("Hello Cpp World!");
+```
+
+**初始值**
+
+当对象在创建时获得一个特定的值，这个对象被**初始化**（`initialzied`）了。在`C++`中，初始化时一个异常复杂的问题，我们也将反复讨论这个问题。很多程序员对于使用`=`初始化变量感到困惑，这种方式让人认为初始化时赋值的一种。实际上在`C++`中初始化和赋值是完全两种不同的概念。让我们看看看声明、定义、初始化和赋值的差别：
+
+* 声明：告诉编译器这里有一个什么类型的变量，并不分配内存。
+* 定义：告诉编译器这里有一个什么类型的变量，并未变量分配`sizeof(type)`的内存。
+* 初始化：在定义变量的时候赋给变量初值的过程就是初始化。
+* 赋值：擦去变量的现有值，并以新的值替代。
+
+**列表初始化**
+
+`C++`语言定义了初始化的好几种不同形式，这也是初始化问题复杂的一个体现。例如，如果想初始化一个`int`变量，可以使用一下`4`种方法中的任意一种：
+
+```cpp
+int i(42);
+int i{42};
+int i = 42;
+int i = {42};
+```
+
+在`C++11`中，花括号初始化变量得到了全面应用。这种初始化的方式成为**列表初始化**（`list initialization`）。
+
+当内置类型使用列表初始化时，如果初始值存在丢失信息的风险，则编译器会报错：
+
+```cpp
+double PI = 3.1415926;
+int i(PI), j = PI;	//初始化成功，i == j == 3
+int m{PI}, n = {PI}; //初始化失败
+```
+
+**默认初始化**
+
+如果定义变量时没有指定初值，则变量被**默认初始化**（`default initialized`），此时变量被赋予默认值，默认值是什么由变量的类型和变量所在的位置决定。
+
+* 如果变量处于函数内
+  * 如果变量是内置类型，则不被初始化，变量的值是随机的
+  * 如果变量是自定义类型，将执行自定义类型的默认构造函数，如果没有默认构造函数，编译器会为类生成默认构造函数
+* 如果变量处于函数外（全局变量）
+  * 如果变量是内置类型，将被初始化为`0`
+  * 如果是自定义类型，将执行自定义类型的默认构造函数，如果没有默认构造函数，编译器会为类生成默认构造函数
+
+建议初始化每一个内置类型的变量，不管变量在何处出现。使用未初始化的变量将会带来无法预估的后果。
+
+### 2.2.2 变量声明和定义的关系
+
+**C++**支持**分离式编译**（`separate compilation`）机制，允许将程序分割为若干个文件，每个文件独立编译。
+
+为了支持分离式编译，**C++**将声明和定义区分开来。**声明**（`declaration`）使得名字为程序所知，一个文件如果想使用这个名字对应的变量必须包含对这个名字的声明。**定义**（`definition`）负责创建与名字关联的实体。
+
+一个变量可以多次声明，但只能被定义一次。
+
+```cpp
+extern double pi;		//声明
+double pi = 3.1415926;	//定义
+extern double pi2 = 3.1415926;	//定义，extern语句如果包含初始值就不再是声明，而是定义
+```
+
+### 2.2.3 标识符
+
+`C++`的**标识符**（identifier）由字母、数字、下划线组成，必须以字母或下划线开头，标识符的长度没有限制，但是对大小写字母敏感。
+
+**C++**为标准库保留了一些名字，用户自定义的标识符不能联系出现两个下划线，也不能以下划线紧连着大写字母开头。此外，定义在函数体外的标识符也不能以下划线开头。（非强制）
+
+**变量命名规范**
+
+变量的命名有许多约定俗成的规范：
+
+* 标识符要能体现出实际含义。
+* 变量名一般用小写字母
+* 自定义类名一般以大写字母开头
+* 如果标识符有多个单词组成，单词间应该有明显区分，如`hello_cpp_world`或`helloCppWorld`，而不要使用`hellocppworld`。
+
+坚持命名规范，做一个受人尊敬的程序员！
+
+|            |              | C++关键字 |                  |          |
+| ---------- | ------------ | :-------: | ---------------- | -------- |
+| alignas    | cntinue      |  friend   | register         | true     |
+| alignof    | decltype     |   goto    | reinterpret_cast | try      |
+| asm        | defealt      |    if     | return           | typedef  |
+| auto       | dekete       |  inline   | short            | typeid   |
+| bool       | do           |    int    | signed           | typename |
+| break      | double       |   long    | sizeof           | union    |
+| case       | dynamic_cast |  mutable  | static           | unsigned |
+| catch      | else         | namespace | static_assert    | using    |
+| char       | enum         |    new    | static_cast      | virtual  |
+| char16_t   | explict      | noexpect  | struct           | void     |
+| char32_t   | export       |  nullptr  | switch           | volatile |
+| class      | extern       | operator  | tempalte         | wchar_t  |
+| const      | false        |  private  | this             | while    |
+| constexpr  | float        | protected | thread_local     |          |
+| const_cast | for          |  public   | throw            |          |
+
+### 2.24 名字的作用域
+
 
 
 ## 2.3 符合类型

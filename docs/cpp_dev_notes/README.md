@@ -1,6 +1,8 @@
 # C++ 开发笔记
 ## C++进阶
 
+[C++小知识点（不断更新）](./cpp-little-points.md)
+
 [C++11中lambda表达式捕获变量的生命周期详解](./variable-life-cycle-captured-by-lambda.md)
 
 [C++中static修饰的全局函数能否在其他文件中使用？](./can-static-global-function-be-used-in-other-file.md)

@@ -20,7 +20,8 @@ features:
   - title: 如何学习C++？
     details: 每个人的方法各不相同。写代码、看视频与读工具书的效率是递减的。
 
-footer: MIT Licensed | Copyright © 2022 HelloCppWorld.com
+footer: Copyright © 2022 HelloCppWorld.com<br/>
+皖ICP备2022008852号
 ---
 
 ## [C++ Primer 系列:fire:](./cpp_primer/)

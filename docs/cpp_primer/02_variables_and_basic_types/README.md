@@ -768,14 +768,138 @@ int k = 42;				//k不能在编译器得出结果，可能还有其他地方改�
 const int m = get_size();	//m不是常量表达式
 ```
 
-**const变量**
+**constexpr变量**
 
+允许将变量声明为`constexpr`类型以便编译器来验证变量的值是否是一个常量表达式。声明为`constexpr`类型的变量一定是一个常量，而且必须用常量表达式来初始化。
 
+```cpp
+constexpr int i = 42;
+constexpr int j = i + 1;
+constexpr int k = size();	//只有当size是一个constexpr函数时才是一条正确的声明语句
+```
 
+一般来说，如果你认定一个变量是一个常量表达式，那就把它声明成`constexpr`类型。
 
+**字面值类型**
 
+常量表达式的值需要在编译时计算结果，因此对声明`constexpr`时用到的类型必须有所限制。因为这些类型一般比较简单，值也显而易见，容易得到，就把他们称为字面值型（`literal type`）。
 
+算术类型、引用和指针都属于字面值类型。
+
+自定义类、IO库、string类型则不属于字面值类型，因此不能定义成`constexpr`。
+
+尽管指针和引用都能定义成`constexpr`，但它们的初始值却收到严格限制。一个`constexpr`指针的初始值必须是`nullptr`或`0`，或者是存储于某个固定地址中的对象。
+
+**指针和constexpr**
+
+`constexpt`声明中如果定义了一个指针，限定符`constexpr`仅仅对指针有效，与指针指向的对象无关。
+
+```cpp
+const int* p = nullptr;		//指针的值能修改，指向的对象不能修改
+constexpr int* p2 = nullptr;	//指针不能修改，与指向的对象无关
+```
+
+与其他常量指针类似，`constexpr`指针既可以指向常量也可以指向非常量：
+
+```cpp
+const int i = 42;		//i必须定义在常量区或静态变量区
+constexpr const int* p = &i;	//p的值不能改变，且指向在BSS 或DS 上，指向的对象也不可改变
+const int* const p = &i;	//这里的p的值不能改变，但是可以在栈上或堆上，也可以在BSS 或DS 上
+```
 
 ## 2..5 处理类型
+
+### 2.5.1 类型别名
+
+**类型别名**（`type alias`）是一个名字，是某种类型的同义词。类型别名可以使复杂的类型名字变得简单明了、易于理解和使用，还有助于程序员清楚地知道使用该类型的真实目的。
+
+两种方法定义类型别名，传统的方法使用关键字`typedef`，新标准使用**别名声明**（`alias declaration`）定义类型的别名。
+
+```cpp
+typedef unsigned int uint32;
+using uint32 = unsigned int;
+
+uint32 u = 0;	//定义完类型别名即可使用
+```
+
+**指针、常量和类型别名**
+
+如果某个类型别名指代的是复合类型或常量，那么它用到声明语句里可能产生一项不到的后果：
+
+```cpp
+typedef char* pstring;
+const prstring cstr = 0;	//这里应该把prstring看作是一个整体，是一个指针，const修饰的是指针，所以等同于
+char* const cstr = 0;	//这里是一个常量指针，而不是直接展开，变成了指向常量的指针
+const char* cstr = 0;	//这里不对
+
+const pstring* ps;	//ps是一个指针，指向一个指向char的常量指针，等同于
+char* const *ps; //而不是 const char **ps
+```
+
+### 2.5.2 auto类型说明符
+
+`C++11`新标准引入了`auto`类型说明符，它能够让编译器替我们分析表达式所属的类型。`auto`通过初始值来推断变量的类型，所以`auto`定义的变量必须有初始值。
+
+使用`auto`在一条语句中定义多个变量时，多个变量的初始值的基本数据类型要一致。
+
+```cpp
+auto sum = val1 + val2;	//sum的类型取决于val1和val2的相加结果
+auto i = 0, *p = &i;	//正确，auto推导为int
+auto sz = 0, pi = 3.14;	//错误，auto不能推导出变量类型
+```
+
+**复合类型、常量和auto**
+
+`auto`会忽略顶层`const`而保留顶层`const`。
+
+如果希望推断出的`auto`类型是一个顶层`const`，需要加上`const`。
+
+```cpp
+const int i = 42;
+auto j = i;	//j被推断为int，顶层const被忽略
+const auto k = i;	//k被推断为const int类型
+const int* p = &i;
+auto p2 = p;	//p2被推断为const int*，底层const被保留
+```
+
+### 2.5.3 decltype类型指示符
+
+`C++11`新标准引入了第二种类型说明符`decltype`，它的作用是选择并返回操作数的数据类型。这个过程在编译阶段完成，并不计算表达式的值。
+
+```cpp
+int f()
+{
+    return 0;
+}
+decltype(f()) i = 42;	//i的类型和f函数返回的类型一致，但并没有真正调用f函数
+```
+
+`decltype`处理顶层`const`和引用的方式与`auto`有些许不同。`decltype`保留顶层`const`和引用。
+
+```cpp
+const int i = 42, &r = i;
+decltype(i) j = 0;	//j为const int类型
+decltype(r) k = i;	//k类型为const int&
+```
+
+需要注意的是，引用从来都是作为哦其所指向的对象的同义词出现，只有用在`decltype`处是一个例外。
+
+**decltype和引用**
+
+如果表达式返回一个右值，`decltype`将声明一个右值的类型，如果表达式返回的是一个左值，`declytpe`则声明一个左值类型的引用。
+
+如果把在表达式前后多加入一个括号，则不管表达式返回的是左值还是右值，`decltype`都将声明为表达式返回值类型的引用。
+
+```cpp
+int i = 42;
+int f1(){return i;}
+int& f2(){return i;}
+
+decltype(f1()) m;	//正确，等于 int m;
+decltype(f2()) n;	//错误，等于int& n;引用必须初始化
+
+decltype((f1())) a = i;	//双括号，等同于 int& a = i;
+decltype((f2())) b = i;	//双括号，等同于 int& b = i;
+```
 
 ## 2.6 自定义数据结构

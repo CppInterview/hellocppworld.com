@@ -28,7 +28,7 @@ export default defineUserConfig({
                 link: '/cpp_interview/',
             },
             {
-                text: '关于 C++的三个问题',
+                text: '关于 C++',
                 link: '/about_cpp/',
             },
             {

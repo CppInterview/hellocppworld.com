@@ -5,10 +5,10 @@ heroText: "Hello Cpp World!"
 tagline: 《C++ 从入门到放弃》系列知识分享。
 actions:
   - text: 如何入门？
-    link: /zh/guide/getting-started.html
+    link: /about_cpp/getting-started.html
     type: primary
   - text: 是否放弃？
-    link: /guide/
+    link: /about_cpp/give-up-or-not.html
     type: secondary
 
 

@@ -903,3 +903,124 @@ decltype((f2())) b = i;	//双括号，等同于 int& b = i;
 ```
 
 ## 2.6 自定义数据结构
+
+数据结构是把一组相关的数据元素组织起来然后使用它们的策略和方法。`C++`允许用户以类的形式自定义数据类型。
+
+###  2.6.1 定义Sale_data类型
+
+```cpp
+struct Sale_data
+{
+  	std::string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+};
+```
+
+类以`struct`开始，紧跟着类名和类体（其中类体部分可以为空）。类体由花括号包围形成一个新的作用域。类内部定义的名字必须唯一，但可以与类外部定义的名字重复。
+
+类体右侧的表示结束的花括号必须写一个分号，这是因为类体后面可以紧跟变量名表示对该类型变量的定义，所以分号必不可少。
+
+```cpp
+struct Sale_data {} accum, trans, *salesptr;
+//等价于上一条，但更清晰
+struct Sale_data{};
+Sale_data accum, trans, *salesptr;
+```
+
+**类数据成员**
+
+类体定义类的成员，`Sale_data`类只有**数据成员**（`data member`）。类的数据成员定义了类的对象的具体内容，每个对象有自己的一份数据成员拷贝。修改一个对象的数据成员，不会影响其他`Sale_data`的对象。
+
+`C++11`规定，可以为数据成员提供一个**类内的初始值**（`in-class initializer`）。创建对象时，类内初始值将用于初始化数据成员。没有初始值的成员将被默认初始化（参考`2.2.1`节）。
+
+`7.2`节将要介绍，用户可以使用`C++`提供的关键字`class`来定义自己的数据结构。`class`关键字和`struct`关键字在定义类时的唯一区别在于访问控制权限。
+
+### 2.6.2 使用Sale_data类
+
+**添加两个Sale_data对象**
+
+````cpp
+#include <iostream>
+#include <string>
+#include "Sale_data.h"
+
+int main(int argc, char* argv[])
+{
+    Sale_data data1, data2;	//定义了两个Sale_data的对象
+    return 0;
+}
+````
+
+**Sale_data对象读入数据**
+
+```cpp
+double price = 0.0;
+std::cin >> data1.bookNo >> data1.units_sold >> price;
+data1.revenue = data1.units_sold * price;
+```
+
+**输出两个Sale_data对象的和**
+
+```cpp
+if(data1.bookNo == data2.bookNo)
+{
+    unsigned totalCnt = data1.units_sold + data2.units_sold;
+    double totalRevenue = data1.revenue + data2.revenue;
+    std::cout << data1.bookNo << " " << totalCnt << " ";
+    if(totalCnt != 0)
+    {
+        std::cout << totalRevenue/totalCnt << std::endl;
+    }
+    else
+    {
+        std::cout << "(no sales)" << std::endl;
+    }
+    return 0;
+}
+else
+{
+    std::cout << "Data must refer to the same ISBN" << std::endl;
+    return -1;
+}
+```
+
+### 2.6.3 编写自己的头文件
+
+尽管可以在函数体内定义类（见`19.7`章节），但是这样的类会受到一些限制。所以类一般不定义在函数体内。
+
+如果要在不同的文件中使用同一个类，类的定义就必须保持一致。
+
+为了确保各个文件中类的定义一致，类通常被定义在头文件中，而且类所在头文件的名字应与类的名字一样。
+
+头文件中通常包含哪些只能被定义一次的实体，如类、`const`和`constexpr`变量。
+
+头文件一旦改变，相关的源文件必须重新编译以获取更新过的声明。
+
+**预处理器概述**
+
+确保头文件多从包含仍能安全工作的常用技术是**预处理器**（`preprocessor`），它由`C++`语言从`C`语言继承而来。预处理器在编译之前执行的一段程序，可以部分改变我们所写的程序。
+
+`#include`可以把头文件包含进当前文件，当预处理器看到`#include`标记时会用指定的头文件的内容代替`#include`。
+
+**头文件保护符**（`header guard`）依赖于预处理器变量。变量由两种状态，定义和未定义。
+
+`#define`把一个预处理变量设置为定义的，`#ifdef`判断预处理变量是否定义，当定义时返回真，`#ifndef`判断一个预处理变量是否未定义，当未定义时返回真。
+
+```CPP
+//Sale_data.h
+#ifndef SALE_DATA_H
+#define SALE_DATA_H
+struct Sale_data
+{
+   ... 
+}；
+#endif
+```
+
+第一次包含`Sale_data.h`时，`#ifndef`返回真，当再次包含`Sale_data.h`时，`#ifndef`返回假。这样可以保证只会包含一次头文件，防止多次定义。
+
+
+
+
+

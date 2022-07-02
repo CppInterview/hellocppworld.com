@@ -1,11 +1,7 @@
-# 《C++ Primer》系列视频之环境配置
+# 第0章 环境配置
 
-# 学习大纲
 
-* **C++开发有哪些环境需要配置？**
-* **如何配置C++开发环境？**
-
-## C++开发有哪些环境需要配置？
+## 0.1 C++开发有哪些环境需要配置？
 
 首先，我们需要选择一个**操作系统**。`Window`，`Linux`和`MacOs`都可以。
 
@@ -21,9 +17,9 @@
 
 本系列视频我准备在前7章基础课程中使用Windows+Visual Studio环境，后续的章节使用`Linux+vscode+gcc/g++`环境，让大家熟悉一下`Linux`下`C++`的开发流程。
 
-## 如何配置C++开发环境？
+## 0.2 如何配置C++开发环境？
 
-### Windows
+### 0.2.1 Windows环境配置
 
 首先我们来配置`Windows`下的开发环境，我是用的是`Windows 11`操作系统，`IDE`选用`Visual Studio 2022 Community`，个人开发者选用`Community`版本是免费的，而且对于我们来说`Community`版本的功能已经完全够用。
 
@@ -45,7 +41,7 @@ https://visualstudio.microsoft.com/zh-hans/vs/
 
 登录完成之后`Windows`上的`C++`开发环境就配置完成了。
 
-### Linux
+### 0.2.2 Linux环境配置
 
 `Linux`发行版本较多，本文将以`Ubuntu 22.04 LTS`演示，其他发行版本大同小异。
 

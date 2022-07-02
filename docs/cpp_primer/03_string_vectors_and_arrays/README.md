@@ -91,6 +91,100 @@ string s7(10,'w');		//直接初始化
 
 **读写string对象**
 
+在执行读取操作时，`string`对象会自动忽略开头的空白（空格符、换行符、制表符）并从第一个真正的字符开始读起，直到遇到下一处空白。
+
+```cpp
+//test.cpp
+#include <iostream>
+#include <string>
+
+int main(int argc, char* argv[])
+{
+    std::string s;
+    std::cin >> s;				//
+    std::cout << s << std::endl;
+    return 0;
+}
+// g++ test.cpp -o test -std=c++11
+// ./test
+//   helllo cpp world !!!
+// hello
+```
+
+和内置类型的输入输出操作一样，string对象的此类操作也是返回运算符左侧的运算对象作为结果。
+
+```cpp
+//test.cpp
+#include <iostream>
+#include <string>
+
+int main(int argc, char* argv[])
+{
+    std::string s1,s2,s3;
+    std::cin >> s1 >> s2 >> s3;	
+    std::cout << s1 << s2 <<s3 << std::endl;
+    return 0;
+}
+// g++ test.cpp -o test -std=c++11
+// ./test
+//   helllo cpp world !!!
+// hellocppworld
+```
+
+**读取未知数量的string对象**
+
+```CPP
+#include <iostream>
+#include <string>
+
+int main(int argc, char* argv[])
+{
+    std::string world;
+    while(std::cin >> world)
+    {
+        std::cout << world << std::endl;
+    }
+    return 0;
+}
+```
+
+`std::cin >> world`返回`std::cin`可以转换为`bool`类型，当流的状态异常时才会返回`false`。
+
+**使用getline读取一整行**
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main(int argc, char* argv[])
+{
+    std::string line;
+    while(std::getline(std::cin,line))
+    {
+        std::cout << line << std::endl;
+    }
+    return 0;
+}
+```
+
+出发`getline`函数返回的那个换行符实际上被丢弃掉了，得到的`string`对象中并不包含该换行符。
+
+**string的empty和size操作**
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main(int argc, char* argv[])
+{
+    std::string s1;
+    std::string s2("hello cpp world");
+    std::cout << "s1.empty():" << s1.empty() << "s2.empty():" << s2.empty() << std::endl;
+    std::cout << "s1.size():" << s1.size() << "s2.size():" << s2.size() << std::endl;
+    return 0;
+}
+```
+
 
 
 ### 3.2.3 处理string对象中的字符
